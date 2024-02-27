@@ -65,6 +65,40 @@ const register = async (email, password, confirmPassword, data) => {
   }
 };
 
+const forgotPassword = async (email) => {
+  const user = await userService.getOneByIdentity(email);
+  if (!user) {
+    throw ApiErrorUtils.simple('User not found', 404);
+  }
+
+  const resetToken = Math.random().toString(36).substring(2, 15);
+  await userService.update(user._id, { resetToken });
+
+  const emailSent = await SendEmailResetPassword(email, user._id, resetToken);
+  if (emailSent) {
+    return { success: true };
+  } else {
+    throw new ApplicationError('Error sending reset password email', COMMON_ERROR.INTERNAL_SERVER_ERROR);
+  }
+};
+
+const resetPassword = async (userId, resetToken, newPassword, confirmNewPassword) => {
+  const user = await userService.getOneByIdentity(userId);
+  if (!user || user.resetToken !== resetToken) {
+    throw ApiErrorUtils.simple('Invalid reset token', 400);
+  }
+
+  if (newPassword !== confirmNewPassword) {
+    throw ApiErrorUtils.simple('Password and confirmation do not match', 400);
+  }
+
+  // Validate the new password as needed
+
+  const hashedPassword = await encodedUtil.encodedPassword(newPassword);
+  await userService.update(userId, { hashpassword: hashedPassword, resetToken: null });
+
+  return { success: true };
+};
 
 const allowActive = async(userId, tokenactive) => {
   const checkUser = await userService.getOneByIdentity(userId);
@@ -114,5 +148,7 @@ export default {
   authenticateWithGoogle,
   changePassword,
   register,
-  allowActive
+  allowActive,
+  forgotPassword,
+  resetPassword,
 };
