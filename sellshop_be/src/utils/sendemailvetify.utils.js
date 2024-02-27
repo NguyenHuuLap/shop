@@ -17,7 +17,7 @@ const SendEmailVertify = async(email, userId, confirmationToken) =>{
         from: 'nguyenlap1910@gmail.com',
         to: email,
         subject: 'Xác thực OTP',
-        text: `Mã OTP của bạn là: ${otp}}`,
+        text: `Mã OTP của bạn là: ${otp}`,
     }
     try{
         const info = await transporter.sendMail(mailOptions)
