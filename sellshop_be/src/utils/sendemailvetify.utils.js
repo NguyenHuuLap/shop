@@ -10,17 +10,26 @@ const SendEmailVertify = async(email, userId, confirmationToken) =>{
             pass: 'fscu qdfv ujco kytc',
         },
     });
+
+    const otp = generateOtp();
+
     const mailOptions = {
         from: 'nguyenlap1910@gmail.com',
         to: email,
-        subject: 'Xác nhận tài khoản',
-        text: `Nhấn vào đường link để xác nhận tài khoản: http://localhost:3000/confirm/${userId}/${confirmationToken}`,
+        subject: 'Xác thực OTP',
+        text: `Mã OTP của bạn là: ${otp}}`,
     }
     try{
-        await transporter.sendMail(mailOptions);
-        return true;
+        const info = await transporter.sendMail(mailOptions)
+        console.log('Email sent: ' + info.response)
     }catch(err){
-        throw ApiErrorUtils.simple('Đã có lỗi khi gửi mail' + info.response);
+        console.error('Error sending email:', error)
     }
 }
+
+const generateOtp = () => {
+    // Implement your OTP generation logic
+    return '123456'; // Replace with your actual OTP
+  };
+  
 export default SendEmailVertify;
