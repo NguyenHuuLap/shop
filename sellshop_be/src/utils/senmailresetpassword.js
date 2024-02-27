@@ -27,4 +27,9 @@ const SendEmailResetPassword = async(email, userId, confirmationToken) =>{
         throw new ApiErrorUtils('Error sending email', 500)
     }
 }
+
+const generateOtp = () => {
+    // Implement your OTP generation logic
+    return '123456'; // Replace with your actual OTP
+  };
 export default SendEmailResetPassword;
