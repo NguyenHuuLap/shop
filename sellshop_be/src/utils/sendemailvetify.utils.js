@@ -2,10 +2,10 @@ import nodemailer from 'nodemailer';
 import ApiErrorUtils from './ApiErrorUtils.js';
 
 
-const SendEmailVertify = async(email, userId, confirmationToken) =>{
+const SendEmailVertify = async (email, userId, confirmationToken) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
-        auth:{
+        auth: {
             user: 'nguyenlap1910@gmail.com',
             pass: 'fscu qdfv ujco kytc',
         },
@@ -19,17 +19,23 @@ const SendEmailVertify = async(email, userId, confirmationToken) =>{
         subject: 'Xác thực OTP',
         text: `Mã OTP của bạn là: ${otp}`,
     }
-    try{
+    try {
         const info = await transporter.sendMail(mailOptions)
         console.log('Email sent: ' + info.response)
-    }catch(err){
+        return otp
+    } catch (err) {
         console.error('Error sending email:', error)
+        return false
     }
 }
 
 const generateOtp = () => {
-    // Implement your OTP generation logic
-    return '123456'; // Replace with your actual OTP
-  };
-  
+
+    const randomNumber = Math.floor(Math.random() * 10000)
+
+    const otp = randomNumber.toString().padStart(4, '0')
+
+    return otp
+};
+
 export default SendEmailVertify;

@@ -56,6 +56,7 @@ const checkPassword = async (password) => {
 };
 const checkName = async (firstname, lastname) => {
   const nameRegex = /^[a-zA-Z\sÀ-Ỹà-ỹ]+$/u;
+  console.log(firstname)
   if (!firstname || !lastname) {
     throw ApiErrorUtils.simple("Họ tên không được bỏ trống");
   }

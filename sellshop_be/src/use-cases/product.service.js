@@ -11,33 +11,33 @@ import brandModel from "../entities/brand.entity.js";
 const SELECT_FIELD =
   "_id name slug desc video overSpecs origin category brand tags views rate variants quantity warrantyPeriod isHide createdAt updatedAt";
 
-  const generateSku = (name, variantName) => {
-    const nameParts = name.split(' ');
-    const variantParts = variantName.split(' ');
-  
-    const nameInitial = nameParts.map((part) => convertToEnglishLetter(part[0])).join('');
-    const variantInitial = variantParts.map((part) => convertToEnglishLetter(part[0])).join('');
-  
-    const currentDate = new Date();
-    const day = currentDate.getDate().toString().padStart(2, '0'); // Ngày
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Tháng
-    const year = currentDate.getFullYear().toString().slice(-2); // 2 số cuối trong năm
-    const secondsSinceStartOfDay = Math.floor((currentDate - new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())) / 1000); // Số giây từ đầu ngày tới thời điểm hiện tại
-  
-    return `${nameInitial}${variantInitial}_${day}${month}${year}${secondsSinceStartOfDay}`.toUpperCase();
-  };
-  
-  
-  const convertToEnglishLetter = (vietnameseLetter) => {
-    const vietnameseLetters = 'áàảãạăắằẳẵặâấầẩẫậđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵ';
-    const englishLetters = 'aaaaaaaaaaaaaaaaadeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyy';
-  
-    const index = vietnameseLetters.indexOf(vietnameseLetter.toLowerCase());
-    if (index !== -1) {
-      return englishLetters[index];
-    }
-    return vietnameseLetter;
-  };
+const generateSku = (name, variantName) => {
+  const nameParts = name.split(' ');
+  const variantParts = variantName.split(' ');
+
+  const nameInitial = nameParts.map((part) => convertToEnglishLetter(part[0])).join('');
+  const variantInitial = variantParts.map((part) => convertToEnglishLetter(part[0])).join('');
+
+  const currentDate = new Date();
+  const day = currentDate.getDate().toString().padStart(2, '0'); // Ngày
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Tháng
+  const year = currentDate.getFullYear().toString().slice(-2); // 2 số cuối trong năm
+  const secondsSinceStartOfDay = Math.floor((currentDate - new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())) / 1000); // Số giây từ đầu ngày tới thời điểm hiện tại
+
+  return `${nameInitial}${variantInitial}_${day}${month}${year}${secondsSinceStartOfDay}`.toUpperCase();
+};
+
+
+const convertToEnglishLetter = (vietnameseLetter) => {
+  const vietnameseLetters = 'áàảãạăắằẳẵặâấầẩẫậđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵ';
+  const englishLetters = 'aaaaaaaaaaaaaaaaadeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyy';
+
+  const index = vietnameseLetters.indexOf(vietnameseLetter.toLowerCase());
+  if (index !== -1) {
+    return englishLetters[index];
+  }
+  return vietnameseLetter;
+};
 
 const initialProductVariant = async (data) => {
   let variant = {};
@@ -173,9 +173,9 @@ const getMostViewProduct = async () => {
 
 const searchWithFilter = async (query) => {
   try {
-    const searchOptions = {
+    const searchOptions = query.minPrice && query.maxPrice ? {
       "variants.price": { $gte: query.minPrice, $lte: query.maxPrice },
-    };
+    } : {};
 
     if (query.category) {
       const category = await categoryModel

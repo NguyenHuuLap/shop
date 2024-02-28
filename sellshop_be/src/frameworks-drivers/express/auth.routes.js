@@ -6,6 +6,9 @@ import {
   loginWithGoogle,
   register,
   updateProfile,
+  activeUser,
+  sendOTP,
+  forgotPassword
 } from "../../interface-adapters/controllers/auth.controller.js";
 import passport from "passport";
 import { passportConfig } from "../../data-access/passport.js";
@@ -28,7 +31,10 @@ router.get(
 );
 
 router.post("/register", register);
+router.post("/active-user", activeUser);
+router.post("/send-otp", sendOTP);
 router.post("/changepassword", changePassword);
+router.post("/forgot-password", forgotPassword);
 router.get("/confirm/:userId/:tokenactive", confirmActive)
 router.get("/logout", (req, res) => {
   req.logout();

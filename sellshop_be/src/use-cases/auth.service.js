@@ -8,14 +8,14 @@ import userService from "./user.service.js";
 
 const authenticate = async (email, password) => {
   const user = await userService.getOneByIdentity(email);
-  if (!user) throw ApiErrorUtils.simple('Tài khoản hoặc mật khẩu không đúng',400);
-  if (!(await encodedUtil.comparePassword(password, user.hashpassword))){
-     throw ApiErrorUtils.simple('Tài khoản hoặc mật khẩu không đúng',400);
+  if (!user) throw ApiErrorUtils.simple('Tài khoản hoặc mật khẩu không đúng', 400);
+  if (!(await encodedUtil.comparePassword(password, user.hashpassword))) {
+    throw ApiErrorUtils.simple('Tài khoản hoặc mật khẩu không đúng', 400);
   }
-  if(user.status != 'active'){
-    throw ApiErrorUtils.simple(`Vui lòng xác thực email bằng cách click vào link đã được gửi vào mail của bạn`,400);
+  if (user.status != 'active') {
+    throw ApiErrorUtils.simple(`Vui lòng xác thực email bằng cách click vào link đã được gửi vào mail của bạn`, 400);
   }
-    
+
   const token = jwtUtil.genToken({ email: user.email, _id: user._id });
   return { token };
 };
@@ -56,30 +56,37 @@ const register = async (email, password, confirmPassword, data) => {
   } else {
     const confirmationToken = Math.random().toString(36).substring(2, 15);
     const hashPassword = await encodedUtil.encodedPassword(password);
-    Object.assign(data, { hashpassword: hashPassword, tokenactive: confirmationToken  });
+    Object.assign(data, { hashpassword: hashPassword, tokenactive: confirmationToken });
     const newUser = await userService.add(data);
     const sendemailvetify = await SendEmailVertify(email, newUser._id, confirmationToken);
-    if(sendemailvetify){
-      return newUser;
+    if (sendemailvetify) {
+      return {
+        user: newUser,
+        otp: sendemailvetify
+      };
     }
   }
 };
 
-const forgotPassword = async (email) => {
+const forgotPassword = async (email, newPassword) => {
   const user = await userService.getOneByIdentity(email);
   if (!user) {
     throw ApiErrorUtils.simple('User not found', 404);
   }
 
-  const resetToken = Math.random().toString(36).substring(2, 15);
-  await userService.update(user._id, { resetToken });
+  // const resetToken = Math.random().toString(36).substring(2, 15);
+  // await userService.update(user._id, { resetToken });
 
-  const emailSent = await SendEmailResetPassword(email, user._id, resetToken);
-  if (emailSent) {
-    return { success: true };
-  } else {
-    throw new ApplicationError('Error sending reset password email', COMMON_ERROR.INTERNAL_SERVER_ERROR);
-  }
+  // const emailSent = await SendEmailResetPassword(email, user._id, resetToken);
+  // if (emailSent) {
+  //   return { success: true };
+  // } else {
+  //   throw new ApplicationError('Error sending reset password email', COMMON_ERROR.INTERNAL_SERVER_ERROR);
+  // }
+
+  const hashedPassword = await encodedUtil.encodedPassword(newPassword);
+  await userService.update(user._id, { hashpassword: hashedPassword, resetToken: null });
+  return { success: true }
 };
 
 const resetPassword = async (userId, resetToken, newPassword, confirmNewPassword) => {
@@ -100,16 +107,26 @@ const resetPassword = async (userId, resetToken, newPassword, confirmNewPassword
   return { success: true };
 };
 
-const allowActive = async(userId, tokenactive) => {
+const activeUser = async (email) => {
+  const checkUser = await userService.getOneByIdentity(email)
+  if (checkUser) {
+    await userService.update(checkUser._id, { status: 'active' })
+    return true
+  } else {
+    return false
+  }
+}
+
+const allowActive = async (userId, tokenactive) => {
   const checkUser = await userService.getOneByIdentity(userId);
-  if(checkUser.status === 'inactive'){
-    if(checkUser.tokenactive === tokenactive){
-      await userService.update(userId, {status: 'active'});
+  if (checkUser.status === 'inactive') {
+    if (checkUser.tokenactive === tokenactive) {
+      await userService.update(userId, { status: 'active' });
       return true;
-    }else{
+    } else {
       throw ApiErrorUtils.simple('Đã có lỗi xảy ra khi xác thực');
     }
-  }else if(checkUser.status === 'active'){
+  } else if (checkUser.status === 'active') {
     return true
   }
 }
@@ -151,4 +168,5 @@ export default {
   allowActive,
   forgotPassword,
   resetPassword,
+  activeUser
 };
