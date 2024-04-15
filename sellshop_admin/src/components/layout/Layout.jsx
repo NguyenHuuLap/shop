@@ -21,6 +21,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Cookies from 'js-cookie'
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 const drawerWidth = 240;
 
@@ -55,6 +56,12 @@ function Layout(props) {
         <ListItem disablePadding>
           <ListItemButton component={Link} to="/order" sx={{fontSize: 12, backgroundColor: page === 'order' && "#ee4d2d" }}>
             <ListItemText primary="Hóa đơn" />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem disablePadding>
+          <ListItemButton component={Link} to="/statistics" sx={{fontSize: 12, backgroundColor: page === 'statistics' && "#ee4d2d" }}>
+            <ListItemText primary="Thống kê" />
           </ListItemButton>
         </ListItem>
 
