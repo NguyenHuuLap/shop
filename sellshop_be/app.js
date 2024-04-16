@@ -8,6 +8,7 @@ import productRoutes from './src/frameworks-drivers/express/product.routes.js';
 import discountRoutes from './src/frameworks-drivers/express/discount.routes.js';
 import cartRoutes from './src/frameworks-drivers/express/cart.router.js';
 import imageRoutes from './src/frameworks-drivers/express/image.routes.js';
+import statisticsRoutes from './src/frameworks-drivers/express/statistics.routes.js';
 import express from 'express';
 import connectDB from './src/data-access/mongodb_connector.js';
 import cors from 'cors';
@@ -35,6 +36,7 @@ app.use('/product', productRoutes);
 app.use('/comment', commentRoutes);
 app.use('/discount', discountRoutes);
 app.use('/image', imageRoutes);
+app.use('/statistics', statisticsRoutes);
 
 
 app.get('/test', (req, res) => {

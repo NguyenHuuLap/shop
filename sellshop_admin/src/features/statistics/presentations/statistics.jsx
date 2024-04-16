@@ -12,18 +12,22 @@ const Statistics = () => {
 
     // Gọi API để lấy dữ liệu tổng số đơn hàng, tổng doanh thu, thống kê đơn hàng theo trạng thái và người dùng
     useEffect(() => {
-        axios.get('/api/statistics')
-            .then(response => {
-                setTotalOrders(response.data.totalOrders);
-                setTotalRevenue(response.data.totalRevenue);
-            })
-            .catch(error => console.error('Lỗi khi lấy dữ liệu tổng số đơn hàng và doanh thu:', error));
+        const a = async () => {
+            const Statictisawait = await axios.get('http://localhost:3030/statistics/statistics')
+                .catch(error => console.error('Lỗi khi lấy dữ liệu tổng số đơn hàng và doanh thu:', error));
+            if (Statictisawait && Statictisawait.status == 200) {
+                setTotalOrders(Statictisawait.data.data.totalOrders);
+                console.log(Statictisawait.data)
+                setTotalRevenue(Statictisawait.data.data.totalRevenue);
+            }
+            await axios.get('http://localhost:3030/statistics/statistics/status')
+                .then(response => {
+                    setOrderStatusData(response.data.data);
+                })
+                .catch(error => console.error('Lỗi khi lấy dữ liệu thống kê đơn hàng theo trạng thái:', error));
+        }
 
-        axios.get('/api/statistics/status')
-            .then(response => {
-                setOrderStatusData(response.data);
-            })
-            .catch(error => console.error('Lỗi khi lấy dữ liệu thống kê đơn hàng theo trạng thái:', error));
+        a()
 
         // axios.get('/api/statistics/user')
         //     .then(response => {
@@ -59,7 +63,7 @@ const Statistics = () => {
     return (
         <div>
             <h2>Thống kê</h2>
-            
+
             {/* Hiển thị tổng số đơn hàng và tổng doanh thu */}
             <div>
                 <h3>Tổng số đơn hàng: {totalOrders}</h3>

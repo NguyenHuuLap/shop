@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import {
-    calculateTotalRevenue,
     getOrderStatistics,
     getOrderStatisticsByStatus,
     getOrderStatisticsByUser,
@@ -9,7 +8,7 @@ import {
 const router = Router();
 
 // Thống kê tổng số đơn hàng và tổng doanh thu
-router.get('/statistics', calculateTotalRevenue);
+router.get('/statistics', getOrderStatistics);
 // router.get('/statistics1', getOrderStatistics);
 
 // Thống kê đơn hàng theo từng trạng thái
