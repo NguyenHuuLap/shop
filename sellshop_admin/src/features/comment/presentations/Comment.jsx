@@ -124,11 +124,11 @@ const Example = () => {
             },
             {
                 accessorKey: 'isDelete',
-                header: 'Xóa đánh giá',
+                header: 'Ẩn đánh giá',
                 editVariant: 'select',
                 editSelectOptions: [
-                    { label: "Xóa", value: true },
-                    { label: "Không xóa", value: false }
+                    { label: "Ẩn", value: true },
+                    { label: "Không ẩn", value: false }
                 ],
                 muiEditTextFieldProps: {
                     select: true,
@@ -140,9 +140,9 @@ const Example = () => {
                     const value = cell.renderedCellValue;
                     let displayValue = '';
                     if (value === true) {
-                        displayValue = 'Đã xóa';
+                        displayValue = 'Ẩn';
                     } else if (value === false) {
-                        displayValue = 'Chưa xóa';
+                        displayValue = 'Không ẩn';
                     } else {
                         displayValue = 'Lỗi'
                     }

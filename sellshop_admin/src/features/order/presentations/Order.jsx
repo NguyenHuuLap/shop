@@ -48,14 +48,14 @@ const Example = () => {
                 enableEditing: false,
                 size: 80,
             },
-            // {
-            //     accessorKey: 'createdAt',
-            //     header: 'Ngày tạo',
-            //     enableEditing: false,
-            //     Cell: ({ renderedCellValue }) => {
-            //         return <span>{new Intl.DateTimeFormat('vi-VN', { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }).format(new Date(renderedCellValue))}</span>;
-            //     },
-            // },
+            {
+                accessorKey: 'createdAt',
+                header: 'Ngày tạo',
+                enableEditing: false,
+                Cell: ({ renderedCellValue }) => {
+                    return <span>{new Intl.DateTimeFormat('vi-VN', { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }).format(new Date(renderedCellValue))}</span>;
+                },
+            },
             {
                 accessorKey: 'customer.name',
                 header: 'Họ tên khách hàng',

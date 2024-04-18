@@ -248,9 +248,9 @@ const Example = () => {
                     const value = cell.renderedCellValue;
                     let displayValue = '';
                     if (value === true) {
-                        displayValue = 'Đã xóa';
+                        displayValue = 'Ẩn';
                     } else if (value === false) {
-                        displayValue = 'Chưa xóa';
+                        displayValue = 'Không ẩn';
                     } else {
                         displayValue = 'Lỗi'
                     }

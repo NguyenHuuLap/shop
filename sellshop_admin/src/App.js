@@ -17,6 +17,7 @@ import Item from "./features/order/components/Item";
 import OverSpec from "./features/product/components/OverSpec";
 import DetailSpec from "./features/product/components/DetailSpec";
 import HightLightPic from "./features/product/components/HighLightPics";
+import Statistics from "./features/statistics/presentations/statistics";
 import { Provider } from "react-redux";
 import store from "./redux/stores";
 import { useSelector, useDispatch } from 'react-redux';
@@ -88,6 +89,7 @@ function App() {
                     <Route path="/brand" name="Brand" Component={Brand} />
                     <Route path="/category" name="Category" Component={Category} />
                     <Route path="/comment" name="Comment" Component={Comment} />
+                    <Route path="/statistics" name="statistics" Component={Statistics} />
                     <Route path="/product" name="Product" Component={Product} />
                     <Route path="/product/:productId/variant" name="Variant" Component={Variant} />
                     <Route path="/product/:productId/over-spec" name="OverSpec" Component={OverSpec} />
