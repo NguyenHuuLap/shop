@@ -87,6 +87,10 @@ const userSchema = mongoose.Schema(
     address: [
       {
         type: {
+          customer: {
+            name: String,
+            phone: String,
+          },
           street: {
             type: String,
             trim: true,

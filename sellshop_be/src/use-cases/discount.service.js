@@ -60,7 +60,7 @@ async function getOne(identity) {
 }
 
 async function getOneByCode(code) {
-    return await discountModel.find({ code: code, isDelete: false }).lean().exec();
+    return await discountModel.findOne({ code: code, isDelete: false }).lean().exec();
 }
 
 async function calculateDiscountAmt(code, subTotal) {
