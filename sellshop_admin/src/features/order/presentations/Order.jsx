@@ -39,15 +39,15 @@ const ProfileProduct = styled(Button)({
 
 const Example = () => {
     const [validationErrors, setValidationErrors] = useState({});
-
+    
     const columns = useMemo(
         () => [
-            {
-                accessorKey: '_id',
-                header: 'Id',
-                enableEditing: false,
-                size: 80,
-            },
+            // {
+            //     accessorKey: '_id',
+            //     header: 'Id',
+            //     enableEditing: false,
+            //     size: 80,
+            // },
             {
                 accessorKey: 'createdAt',
                 header: 'Ngày tạo',
@@ -204,6 +204,9 @@ const Example = () => {
                 accessorKey: 'subTotal',
                 header: 'Tổng tiền sản phẩm',
                 enableEditing: false,
+                Cell: ({ renderedCellValue }) => {
+                    return <span>{renderedCellValue.toLocaleString('vi-VN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>;
+                },
 
             },
             {
@@ -216,12 +219,18 @@ const Example = () => {
                 accessorKey: 'discount',
                 header: 'Giá khuyến mãi',
                 enableEditing: false,
+                Cell: ({ renderedCellValue }) => {
+                    return <span>{renderedCellValue.toLocaleString('vi-VN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>;
+                },
 
             },
             {
                 accessorKey: 'total',
                 header: 'Tổng tiền',
                 enableEditing: false,
+                Cell: ({ renderedCellValue }) => {
+                    return <span>{renderedCellValue.toLocaleString('vi-VN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>;
+                },
 
             },
             // {
