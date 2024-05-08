@@ -12,7 +12,7 @@ router.get("/owner", authMiddleware.isAuthorized, getByUser);
 router.get("/owner/:orderId", authMiddleware.isAuthorized, getOneByOwner);
 router.get("/:orderId", getOne);
 router.get("/repay/:orderId", authMiddleware.isAuthorized, repay);
-router.patch("/:orderId", update);
+router.patch("/:orderId", authMiddleware.isAuthorized, update);
 router.patch("/by-admin/:orderId", updateByAdmin);
 router.route('/api/v1/payment/vnpay/callback').get(getVnpayResult);
 router.get("/check-discount/:discountCode", authMiddleware.isAuthorized, checkOrderHasDiscount);

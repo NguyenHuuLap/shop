@@ -13,6 +13,7 @@ export const addImage = async (req, res, next) => {
             res.status(500).json({ message: "has error when add image" });
         }
     } catch (err) {
+        console.log(err)
         next(err);
     }
 }

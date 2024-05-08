@@ -7,7 +7,7 @@ const SendEmailVertify = async (email, userId, confirmationToken) => {
         service: 'gmail',
         auth: {
             user: 'nguyenlap1910@gmail.com',
-            pass: 'fscu qdfv ujco kytc',
+            pass: 'qobh bsyk yjml kguk',
         },
     });
 
@@ -24,7 +24,7 @@ const SendEmailVertify = async (email, userId, confirmationToken) => {
         console.log('Email sent: ' + info.response)
         return otp
     } catch (err) {
-        console.error('Error sending email:', error)
+        console.error('Error sending email:', err)
         return false
     }
 }

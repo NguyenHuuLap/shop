@@ -77,6 +77,12 @@ const userSchema = mongoose.Schema(
       trim: true,
       required: false,
     },
+    sex: {
+      type: Number,
+      enum: [0, 1, -1], // 0: male, 1: female, -1: other
+      trim: true,
+      required: false,
+    },
     resetPasswordToken: {
       type: String,
       trim: true,

@@ -214,7 +214,7 @@ const searchWithFilter = async (query) => {
         checkKeyword ? { score: { $meta: "textScore" } } : { createdAt: -1 },
       )
       .skip((query.page - 1) * 9)
-      .limit(9)
+      .limit(query.limit || 9)
       .lean()
       .exec();
     console.log(list);

@@ -61,6 +61,7 @@ export const repay = async (req, res, next) => {
 
 export const update = async (req, res, next) => {
     try {
+
         let order = await orderService.update(req.params.orderId, req.body, req.user._id)
 
         if (order)
@@ -76,7 +77,7 @@ export const update = async (req, res, next) => {
 export const updateByAdmin = async (req, res, next) => {
     try {
         let order = await orderService.updateByAdmin(req.params.orderId, req.body)
-        
+
         if (order)
             responseUtil.response(res, httpStatus.OK, `Success`, order);
         else

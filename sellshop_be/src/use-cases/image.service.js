@@ -12,6 +12,7 @@ cloudinary.config({
 });
 
 const uploadImage = async (path) => {
+  console.log("alo");
   try {
     const uploadImage = await cloudinary.v2.uploader.upload(path);
 
@@ -20,13 +21,14 @@ const uploadImage = async (path) => {
       public_id: uploadImage.public_id,
     };
   } catch (err) {
+    console.log(err);
     throw new Error("Error when upload file: " + err.message);
   }
 };
 
 const replaceImage = async (id, path) => {
   try {
-    const uploadImage = await cloudinary.v2.uploader.upload(path,  {
+    const uploadImage = await cloudinary.v2.uploader.upload(path, {
       public_id: id,
       overwrite: true,
     });

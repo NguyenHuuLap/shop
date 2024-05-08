@@ -22,10 +22,10 @@ const getList = async (
       ...(productId && { productId: productId }),
       ...(userId && { userId: userId }),
       ...{ parentCommentId: parentCommentId },
-      ...{isDelete: false}
+      ...{ isDelete: false }
     })
     .sort(sort)
-    .populate("replies userId")
+    .populate("replies userId productId")
     .skip(currentPage ? currentPage - 1 : null)
     .limit(limit)
     .lean()
@@ -84,7 +84,7 @@ const getByUser = async (
     userId,
     null,
     sort,
-    { $exists: true, $ne: null },
+    null,
     currentPage,
     limit,
   );

@@ -9,6 +9,7 @@ import discountRoutes from './src/frameworks-drivers/express/discount.routes.js'
 import cartRoutes from './src/frameworks-drivers/express/cart.router.js';
 import imageRoutes from './src/frameworks-drivers/express/image.routes.js';
 import statisticsRoutes from './src/frameworks-drivers/express/statistics.routes.js';
+import favoriteRoutes from './src/frameworks-drivers/express/favorite.routes.js'
 import express from 'express';
 import connectDB from './src/data-access/mongodb_connector.js';
 import cors from 'cors';
@@ -21,14 +22,14 @@ var app = express();
 
 connectDB();
 app.use(passport.initialize());
-  
+
 
 app.use(express.json());
 app.use(cors());
 
 app.use('/user', userRoutes);
 app.use('/category', categoryRoutes);
-app.use('/cart', cartRoutes); 
+app.use('/cart', cartRoutes);
 app.use('/auth', authRoutes);
 app.use('/order', orderRoutes);
 app.use('/brand', brandRoutes);
@@ -37,6 +38,7 @@ app.use('/comment', commentRoutes);
 app.use('/discount', discountRoutes);
 app.use('/image', imageRoutes);
 app.use('/statistics', statisticsRoutes);
+app.use('/favorites', favoriteRoutes);
 
 
 app.get('/test', (req, res) => {
