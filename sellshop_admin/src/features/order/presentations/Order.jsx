@@ -42,12 +42,12 @@ const Example = () => {
     
     const columns = useMemo(
         () => [
-            // {
-            //     accessorKey: '_id',
-            //     header: 'Id',
-            //     enableEditing: false,
-            //     size: 80,
-            // },
+            {
+                accessorKey: '_id',
+                header: 'Id',
+                enableEditing: false,
+                size: 80,
+            },
             {
                 accessorKey: 'createdAt',
                 header: 'Ngày tạo',
@@ -284,7 +284,7 @@ const Example = () => {
         // }
         setValidationErrors({});
         await updateOrder(values);
-        table.setEditingRow(null); //exit editing mode
+        table.setEditingRow(null); //exit ed    iting mode
     };
 
     //DELETE action
@@ -420,6 +420,7 @@ function useUpdateOrder() {
     return useMutation({
         mutationFn: async (data) => {
             const id = data._id;
+            console.log(data) 
             delete data._id;
             delete data.createdAt
             delete data.updatedAt

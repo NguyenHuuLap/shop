@@ -29,7 +29,7 @@ const productVariantSchema = new Schema(
   {
     sku: { type: String, trim: true, required: false }, //
     variantName: { type: String, trim: true }, //màu sắc
-    slug: { type: String, slug: "variantName", unique: false },
+    slug: { type: String, slug: "variantName", unique: false },  
 
     price: { type: Number, required: true }, //giá khuyến mãi
     marketPrice: { type: Number, required: true }, //gốc
