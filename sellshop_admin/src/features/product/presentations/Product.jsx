@@ -357,7 +357,7 @@ const Example = () => {
         //optionally customize modal content
         renderCreateRowDialogContent: ({ table, row, internalEditComponents }) => (
             <>
-                <DialogTitle variant="h3">Tạo đánh giá mới</DialogTitle>
+                <DialogTitle variant="h3">Tạo sản phẩm mới</DialogTitle>
                 <DialogContent
                     sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
                 >
