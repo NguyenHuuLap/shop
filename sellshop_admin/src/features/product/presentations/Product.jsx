@@ -183,11 +183,14 @@ const Example = () => {
             },
             {
                 accessorKey: 'minPrice',
-                header: 'Giá khuyến mãi',
+                header: 'Giá bán',
                 muiEditTextFieldProps: {
                     required: true,
                     type: 'number',
                     inputProps: { min: 1000 },
+                },
+                Cell: ({ renderedCellValue }) => {
+                    return <span>{renderedCellValue.toLocaleString('vi-VN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>;
                 },
             },
             {
@@ -197,6 +200,9 @@ const Example = () => {
                     required: true,
                     type: 'number',
                     inputProps: { min: 1000 },
+                },
+                Cell: ({ renderedCellValue }) => {
+                    return <span>{renderedCellValue.toLocaleString('vi-VN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>;
                 },
             },
             {

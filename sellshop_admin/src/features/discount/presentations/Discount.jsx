@@ -285,6 +285,9 @@ const Example = () => {
                     type: 'number',
                     inputProps: { min: 0 },
                 },
+                Cell: ({ renderedCellValue }) => {
+                    return <span>{renderedCellValue.toLocaleString('vi-VN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>;
+                },
             },
             {
                 accessorKey: 'isDelete',

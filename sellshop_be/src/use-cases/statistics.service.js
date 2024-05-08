@@ -33,7 +33,9 @@ const calculateTotalRevenue = async () => {
 // Hàm lấy thống kê đơn hàng (tổng số đơn hàng, tổng doanh thu, giá trị trung bình của đơn hàng)
 const getOrderStatistics = async (startDate, endDate) => {
     // Xây dựng truy vấn tìm kiếm dựa trên ngày bắt đầu và kết thúc
-    const query = {};
+    const query = {
+        status: 'completed', // Filter orders with status "completed"
+    };
     if (startDate) {
         query.createdAt = { ...query.createdAt, $gte: startDate };
     }
@@ -66,12 +68,31 @@ const getOrderStatistics = async (startDate, endDate) => {
 
 // Hàm lấy thống kê đơn hàng theo từng trạng thái
 const getOrderStatisticsByStatus = async () => {
+    // const statistics = await orderModel.aggregate([
+    //     { $group: { _id: '$status', count: { $sum: 1 } } }
+    // ]);
+
+    // return statistics;
     const statistics = await orderModel.aggregate([
-        { $group: { _id: '$status', count: { $sum: 1 } } }
+        // {
+        //     // Filter orders by the specified status
+        //     $match: {
+        //         status: 'completed'
+        //     }
+        // },
+        {
+            // Group results by status and calculate the count of completed orders
+            $group: {
+                _id: '$status',
+                count: { $sum: 1 },
+            }
+        }
     ]);
 
+    // Return statistics
     return statistics;
 };
+
 
 // Hàm lấy thống kê đơn hàng theo từng người dùng
 // const getOrderStatisticsByUser = async () => {
